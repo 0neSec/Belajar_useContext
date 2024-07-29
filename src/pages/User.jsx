@@ -5,16 +5,13 @@ import UserTable from '../components/UserTable'
 import { Link } from 'react-router-dom'
 
 export default function User() {
-    const [dark, setDark] = useState("dark");
+    const[dark,setDark] = useState(["dark", "medium", "light"]);
+    const [currentThemeIndex, setCurrentThemeIndex] = useState(0);
+
     const toggleDark = () => {
-        if (dark === "dark") {
-            setDark("medium");
-        } else if (dark === "medium") {
-            setDark("light");
-        } else {
-            setDark("dark");
-        }
-    };
+        setDark((prevDark)=>(dark.length + 1))
+        setCurrentThemeIndex((prevIndex) => (prevIndex + 1) % dark.length);
+    }
 
     return (
         <div>
@@ -24,9 +21,9 @@ export default function User() {
                     <Link to="/blog">blog</Link>
                     <UserForm />
                     <UserTable />
-                    <p> {dark}</p>
+                    <p> {dark[currentThemeIndex]}</p>
                     <button onClick={toggleDark}>
-                       button
+                        button
                     </button>
                 </div>
             </UserProvider>
